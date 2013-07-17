@@ -38,7 +38,7 @@ $spamFilter = array(
 
 
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
-$API_settings = array(
+$settings = array(
     'oauth_access_token'        => "",
     'oauth_access_token_secret' => "",
     'consumer_key'              => "",
@@ -48,6 +48,9 @@ $API_settings = array(
 
 // That's it for editing folks! Don't edit below this line unless you know what you're doing!
 // ------------------------------------------------------------------------------------------
+
+// Include the PHP Wrapper
+require_once('TwitterAPIExchange.php');
 
 // We need this 'multineedle_stripos' function for the spam filter...
 function multineedle_stripos($haystack, $needles) {
@@ -68,7 +71,7 @@ $getfield = '?count=50';
 $requestMethod = 'GET';
 
 // Let's make that API Request. Are you ready?! The returned data from Twitter will be in JSON format. We're going to convert that into XML using the json_decode function.
-$twitter = new TwitterAPIExchange($API_settings);
+$twitter = new TwitterAPIExchange($settings);
 $string = json_decode($twitter->setGetfield($getfield)
              ->buildOauth($url, $requestMethod)
              ->performRequest(),$assoc = TRUE);
